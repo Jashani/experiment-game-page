@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Experiment</title>
+    <script src="https://unpkg.com/jspsych@7.3.3"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@1.1.2"></script>
+    <script src="https://unpkg.com/@jspsych-contrib/plugin-pipe"></script>
+    <link href="https://unpkg.com/jspsych@7.3.3/css/jspsych.css" rel="stylesheet" type="text/css" />
+
+    <style>
+        /* 2. Styles to make the Godot iframe look nice */
+        body {
+            background-color: #000; /* Optional: Match Godot background */
+            color: #fff;
+        }
+        #game-frame {
+            width: 80vw;  /* 80% of viewport width */
+            height: 80vh; /* 80% of viewport height */
+            border: 2px solid #333;
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body></body>
+<script>
+
+    /* -----------------------------------------------------------
+       HELPER FUNCTIONS (Flattening Logic)
+       ----------------------------------------------------------- */
+    
+    function flattenGodotData(rawData) {
+        let flatData = {};
+
+        // 1. Copy simple top-level keys (e.g., "subject_id": "123")
+        for (let key in rawData) {
+            if (!Array.isArray(rawData[key]) && typeof rawData[key] !== 'object') {
+                flatData[key] = rawData[key];
+            }
+        }
+
+        // 2. Flatten the list (assuming your list key is 'l')
+        // We iterate through the list items and append _1, _2, _3 to their keys
+        if (rawData.rounds && Array.isArray(rawData.rounds)) {
+            rawData.rounds.forEach((item, index) => {
+                // 'i' is the trial number (1-based index)
+                let i = index + 1; 
+
+                for (let prop in item) {
+                    // Create new key: e.g., 'rt' becomes 'rt_1'
+                    let newKey = `round_${i}_${prop}`;
+                    flatData[newKey] = item[prop];
+                }
+            });
+        }
+
+        return flatData;
+    }
+
+    /* -----------------------------------------------------------
+       GODOT BRIDGE
+       ----------------------------------------------------------- */
+
+    // This function must be on 'window' so Godot can find it.
+    window.receiveGodotData = function(jsonString) {
+        try {
+            console.log("Raw JSON received from Godot:", jsonString);
+            
+            // 1. Parse the string back to an object
+            var rawData = JSON.parse(jsonString);
+
+            // 2. Flatten the data for CSV compatibility
+            var wideData = flattenGodotData(rawData);
+            
+            console.log("Flattened data for CSV:", wideData);
+
+            // 3. Finish the trial and save this data
+            // This removes the iframe and moves to the next timeline event
+            jsPsych.finishTrial(wideData);
+
+        } catch (error) {
+            console.error("Error parsing Godot data:", error);
+            // Optional: Finish trial with error data so the experiment doesn't hang
+            jsPsych.finishTrial({ error: "Failed to parse Godot data" });
+        }
+    };
+
+    /* -----------------------------------------------------------
+       EXPERIMENT TIMELINE
+       ----------------------------------------------------------- */
+
+    const jsPsych = initJsPsych();
+    const timeline = [];
+
+    // --- SCREEN 1: Welcome ---
+    timeline.push({
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: `
+            <h1>Welcome</h1>
+            <p>We will now load the task.</p>
+            <p>Please do not refresh the page.</p>
+            <p>Press any key to begin.</p>
+        `
+    });
+
+    // --- SCREEN 2: The Godot Game ---
+    const godot_game_trial = {
+        type: jsPsychHtmlKeyboardResponse,
+        // We load the Godot export file (game.html) into an iframe
+        stimulus: '<iframe id="game-frame" src="game.html"></iframe>',
+        choices: "NO_KEYS", // User cannot skip this; must wait for Godot to call receiveGodotData
+        on_load: function() {
+            // Focus the iframe so keyboard inputs go immediately to Godot
+            // (Wrap in a small timeout to ensure DOM is ready)
+            setTimeout(() => {
+                let iframe = document.getElementById('game-frame');
+                if(iframe) iframe.contentWindow.focus();
+            }, 100);
+        }
+    };
+    timeline.push(godot_game_trial);
+
+    // --- SCREEN 3: Save Data to OSF ---
+    const save_data_trial = {
+        type: jsPsychPipe,
+        action: "save",
+        experiment_id: "RHWILWMcmO8T",
+        filename: `data_${jsPsych.randomization.randomID(10)}.csv`,
+        data_string: () => jsPsych.data.get().csv()
+    };
+    timeline.push(save_data_trial);
+
+    // --- SCREEN 4: End ---
+    timeline.push({
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: `
+            <h1>Thank you!</h1>
+            <p>Your results have been uploaded successfully.</p>
+            <p>You may now close this window.</p>
+        `,
+        choices: "NO_KEYS"
+    });
+
+    // Run the experiment
+    jsPsych.run(timeline);
+
+</script>
+</html>
