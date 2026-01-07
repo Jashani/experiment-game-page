@@ -35,7 +35,7 @@ jobs:
         env:
           REDIRECT_URL: ${{ secrets.REDIRECT_URL }}
         run: |
-          sed -i "s|REPLACE_ME_WITH_URL|$REDIRECT_URL|g" index.html
+          sed -i "s|REPLACE_ME_WITH_URL|$REDIRECT_URL|g" bar/index.html
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
