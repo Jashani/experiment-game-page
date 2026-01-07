@@ -142,9 +142,11 @@
     // });
 
     timeline.push({
-        type: 'survey-text',
-        preamble: "Thank you! You're just about done. Click 'Get Credit' to go back to Prolific.",
-        button_label: "Get Credit", 
+        type: 'jsPsychHtmlKeyboardResponse',
+        stimulus: `
+            <h1>All done!</h1>
+            <p>Press any button to be redirected.</p>
+        `,
         on_finish: FunctionWhenDoneSaving
     });
 
