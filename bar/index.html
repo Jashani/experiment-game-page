@@ -103,43 +103,56 @@
         `
     });
 
-    // --- SCREEN 2: The Godot Game ---
-    const godot_game_trial = {
-        type: jsPsychHtmlKeyboardResponse,
-        // We load the Godot export file (game.html) into an iframe
-        stimulus: '<iframe id="game-frame" src="game.html"></iframe>',
-        choices: "NO_KEYS", // User cannot skip this; must wait for Godot to call receiveGodotData
-        on_load: function() {
-            // Focus the iframe so keyboard inputs go immediately to Godot
-            // (Wrap in a small timeout to ensure DOM is ready)
-            setTimeout(() => {
-                let iframe = document.getElementById('game-frame');
-                if(iframe) iframe.contentWindow.focus();
-            }, 100);
-        }
-    };
-    timeline.push(godot_game_trial);
+    // <!-- // --- SCREEN 2: The Godot Game ---
+    // const godot_game_trial = {
+    //     type: jsPsychHtmlKeyboardResponse,
+    //     // We load the Godot export file (game.html) into an iframe
+    //     stimulus: '<iframe id="game-frame" src="game.html"></iframe>',
+    //     choices: "NO_KEYS", // User cannot skip this; must wait for Godot to call receiveGodotData
+    //     on_load: function() {
+    //         // Focus the iframe so keyboard inputs go immediately to Godot
+    //         // (Wrap in a small timeout to ensure DOM is ready)
+    //         setTimeout(() => {
+    //             let iframe = document.getElementById('game-frame');
+    //             if(iframe) iframe.contentWindow.focus();
+    //         }, 100);
+    //     }
+    // };
+    // timeline.push(godot_game_trial);
 
-    // --- SCREEN 3: Save Data to OSF ---
-    const save_data_trial = {
-        type: jsPsychPipe,
-        action: "save",
-        experiment_id: "RHWILWMcmO8T",
-        filename: `data_${jsPsych.randomization.randomID(10)}.csv`,
-        data_string: () => jsPsych.data.get().csv()
-    };
-    timeline.push(save_data_trial);
+    // // --- SCREEN 3: Save Data to OSF ---
+    // const save_data_trial = {
+    //     type: jsPsychPipe,
+    //     action: "save",
+    //     experiment_id: "RHWILWMcmO8T",
+    //     filename: `data_${jsPsych.randomization.randomID(10)}.csv`,
+    //     data_string: () => jsPsych.data.get().csv()
+    // };
+    // timeline.push(save_data_trial); -->
 
-    // --- SCREEN 4: End ---
+    // // --- SCREEN 4: End ---
+    // timeline.push({
+    //     type: jsPsychHtmlKeyboardResponse,
+    //     stimulus: `
+    //         <h1>Thank you!</h1>
+    //         <p>Your results have been uploaded successfully.</p>
+    //         <p>You may now close this window.</p>
+    //     `,
+    //     choices: "NO_KEYS"
+    // });
+
     timeline.push({
-        type: jsPsychHtmlKeyboardResponse,
-        stimulus: `
-            <h1>Thank you!</h1>
-            <p>Your results have been uploaded successfully.</p>
-            <p>You may now close this window.</p>
-        `,
-        choices: "NO_KEYS"
+        type: 'survey-text',
+        preamble: "Thank you! You're just about done. Click 'Get Credit' to go back to Prolific.",
+        button_label: "Get Credit", 
+        on_finish: FunctionWhenDoneSaving
     });
+
+    const prolificLink = "REPLACE_ME_WITH_URL";
+
+    function FunctionWhenDoneSaving() {
+        window.location.href = prolificLink;
+    }
 
     // Run the experiment
     jsPsych.run(timeline);
