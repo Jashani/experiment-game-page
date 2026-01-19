@@ -92,13 +92,19 @@
     const jsPsych = initJsPsych();
     const timeline = [];
 
+    jsPsych.data.addProperties({
+        prolific_id: jsPsych.data.getURLVariable('PROLIFIC_PID'),
+        study_id: jsPsych.data.getURLVariable('STUDY_ID'),
+        session_id: jsPsych.data.getURLVariable('SESSION_ID')
+    });
+
     // --- SCREEN 1: Welcome ---
     timeline.push({
         type: jsPsychHtmlKeyboardResponse,
         stimulus: `
             <h1>Welcome</h1>
-            <p>We will now load the task.</p>
-            <p>Please do not refresh the page.</p>
+            <p>Once you proceed, the task will load and you will receive instructions.</p>
+            <p>Please do not refresh the page through the experiment.</p>
             <p>Press any key to begin.</p>
         `
     });
@@ -136,10 +142,16 @@
         stimulus: `
             <h1>Thank you!</h1>
             <p>Your results have been uploaded successfully.</p>
-            <p>You may now close this window.</p>
+            <p>Press any key to be redirected to Prolific.</p>
         `,
-        choices: "NO_KEYS"
+        on_finish: Redirect
     });
+
+    const prolificLink = "https://www.google.com";
+
+    function Redirect() {
+        window.location.href = prolificLink;
+    }
 
     // Run the experiment
     jsPsych.run(timeline);
