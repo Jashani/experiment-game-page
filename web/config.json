@@ -36,7 +36,7 @@
 			"type": "slider",
 			"stage": "after",
 			"column_name": "attention_check",
-			"text": "Based on all available information, set the slider to -100 if the first participant's comment supports the headline, and to 100 if it opposes the headline.",
+			"text": "Based on all available information, set the slider to -100 if the first participant's comment supports the headline, and to 100 if it opposes the headline. Do not place the slider on any number other than -100 or 100.",
 			"labels": ["Extreme left bias", "No bias", "Extreme right bias"],
 			"min_value": -100.0,
 			"max_value": 100.0,
