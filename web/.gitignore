@@ -1,0 +1,4 @@
+# Godot regenerates .import sidecars for any image inside the project tree;
+# they are irrelevant to the web build.
+*.import
+.DS_Store

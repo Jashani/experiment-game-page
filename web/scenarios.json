@@ -1,0 +1,148 @@
+{
+	"headlines": [
+		{
+			"type": "crime",
+			"left": [
+				{
+					"id": 1,
+					"title": "Chicago Study Finds Police Disproportionately Use Force in Predominantly Black Neighborhoods"
+				},
+				{
+					"id": 2,
+					"title": "Surge in Gun Sales Linked to Spike in Domestic Violence Incidents, Says Leaked Briefing"
+				},
+				{
+					"id": 3,
+					"title": "Private Prison Company Reports Surge in Profits Following State Crackdown on Minor Offenses"
+				}
+			],
+			"right": [
+				{
+					"id": 4,
+					"title": "Violent Crime Surged in Cities That Reduced Police Budgets After 2020, Data Suggests"
+				},
+				{
+					"id": 5,
+					"title": "Report Finds Urban Homicide Spikes Highest Where Police Funding Was Reduced"
+				},
+				{
+					"id": 6,
+					"title": "Data Suggests Victims Who Carry Weapons Less Likely to Suffer Serious Harm"
+				}
+			]
+		},
+		{
+			"type": "education",
+			"left": [
+				{
+					"id": 7,
+					"title": "Study Finds Book Bans Linked to Decline in Student Reading Score"
+				},
+				{
+					"id": 8,
+					"title": "Students in States Cutting LGBTQ+ Support Report Higher Depression Rates"
+				},
+				{
+					"id": 9,
+					"title": "Bans on \"Woke\" Literature Correlate With Drop in Student Critical Thinking Skills"
+				}
+			],
+			"right": [
+				{
+					"id": 10,
+					"title": "First-Grade Reading Scores Drop Sharply in Districts That Replaced Traditional Reading Lessons With DEI-Focused Curriculum"
+				},
+				{
+					"id": 11,
+					"title": "Data Suggests School Districts With Gender-Inclusive Policies See Lower Science Proficiency"
+				},
+				{
+					"id": 12,
+					"title": "Analysis Suggests Decline in SAT Scores Correlates With Rise of Equity-Based Grading Policies"
+				}
+			]
+		},
+		{
+			"type": "environment",
+			"left": [
+				{
+					"id": 13,
+					"title": "States Without Climate Plans See Record Flood Damage, Insurance Costs Soar"
+				},
+				{
+					"id": 14,
+					"title": "Study Finds Communities Without Renewable Energy Projects Suffer Longer Blackouts"
+				},
+				{
+					"id": 15,
+					"title": "Communities Blocking Climate Bills Experience Steeper Home Insurance Premium Hikes"
+				}
+			],
+			"right": [
+				{
+					"id": 16,
+					"title": "Small Town Faces Blackouts After Coal Plant Closure Under Federal Climate Rules"
+				},
+				{
+					"id": 17,
+					"title": "Farmers Say New Water Restrictions for Climate Goals Threaten Crops and Livelihoods"
+				},
+				{
+					"id": 18,
+					"title": "California Town Sees Power Bills Spike After Switching to Renewable Energy"
+				}
+			]
+		},
+		{
+			"type": "immigration",
+			"left": [
+				{
+					"id": 19,
+					"title": "Migrant Workers in Texas Denied Medical Care Despite Paying into State Insurance Pool"
+				},
+				{
+					"id": 20,
+					"title": "New Investigation Finds Immigration Raids Target Legal Residents Due to Flawed Facial Recognition Software"
+				},
+				{
+					"id": 21,
+					"title": "Public Transport Delays Increase Following Deportations of Bus Maintenance Workers"
+				}
+			],
+			"right": [
+				{
+					"id": 22,
+					"title": "New Study Suggests Immigrant Households Receive Twice as Many Housing Subsidies as U.S. Citizens"
+				},
+				{
+					"id": 23,
+					"title": "Housing Assistance Programs Prioritise Migrant Families Over Veterans in Allocation Process"
+				},
+				{
+					"id": 24,
+					"title": "Public Housing Wait Times Skyrocket in Cities Experiencing Record Immigration Growth"
+				}
+			]
+		}
+	],
+	"responses": [
+		{ "support": "I know this is true.", "oppose": "I know this is false." },
+		{ "support": "This is definitely true.", "oppose": "This is definitely not true." },
+		{ "support": "I'm sure this headline is correct.", "oppose": "I'm sure this headline is wrong." },
+		{ "support": "There's no doubt, this is true.", "oppose": "There's no doubt this is false." },
+		{ "support": "This is absolutely accurate.", "oppose": "This is absolutely untrue." },
+		{ "support": "I'm certain this claim is right.", "oppose": "I'm certain this claim is false." },
+		{ "support": "No question — this is true.", "oppose": "No question — this is false." },
+		{ "support": "I'm positive this headline is true.", "oppose": "I'm positive this headline is wrong." }
+	],
+	"arrangements": [
+		{ "headline": "left", "comment": "left", "stance": "support" },
+		{ "headline": "left", "comment": "left", "stance": "oppose" },
+		{ "headline": "left", "comment": "right", "stance": "support" },
+		{ "headline": "left", "comment": "right", "stance": "oppose" },
+		{ "headline": "right", "comment": "left", "stance": "support" },
+		{ "headline": "right", "comment": "left", "stance": "oppose" },
+		{ "headline": "right", "comment": "right", "stance": "support" },
+		{ "headline": "right", "comment": "right", "stance": "oppose" }
+	]
+}
