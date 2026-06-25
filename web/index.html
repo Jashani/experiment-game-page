@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Experiment</title>
+
+    <!-- jsPsych (same versions as the original Godot embedding page) -->
+    <script src="https://unpkg.com/jspsych@7.3.3"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@1.1.2"></script>
+    <script src="https://unpkg.com/@jspsych-contrib/plugin-pipe"></script>
+    <link href="https://unpkg.com/jspsych@7.3.3/css/jspsych.css" rel="stylesheet" type="text/css" />
+
+    <link href="css/game.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <!-- The native-JS game module drives the whole experiment timeline. -->
+    <script type="module" src="src/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,527 @@
+/* Protocol 3 — native-JS port styling.
+   Recreates the Godot dark UI: dark panels, party colours, chat bubbles with
+   thick coloured valence borders, and full-screen 16:9-ish stages. */
+
+:root {
+  --bg: #1b1f26;
+  --panel: #21252b;
+  --panel-2: #2a2f37;
+  --text: #e8eaed;
+  --text-dim: #aab1bb;
+  --accent: #4b8bf5;
+  --accent-text: #ffffff;
+  --bubble-bg: rgb(52, 54, 53);
+  --rep: rgb(216, 88, 87);
+  --dem: rgb(75, 150, 217);
+  --truthy: rgb(0, 102, 46);
+  --falsey: rgb(151, 0, 16);
+  --neutral: rgb(95, 98, 96);
+  --discussion-bg: rgb(54, 65, 80);
+}
+
+/* ---------- Overlay / stage scaffolding ---------- */
+
+#p3-game-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+  font-size: 18px;
+  line-height: 1.5;
+  overflow: hidden;
+}
+
+#p3-game-root {
+  width: 100%;
+  height: 100%;
+}
+
+.stage {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.scroll-stage {
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+  padding: 32px 24px;
+}
+
+.center-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.stage-content {
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.stage-content h1,
+.center-stage h1 {
+  font-size: 40px;
+  margin: 0 0 20px;
+}
+
+.rich-text p {
+  margin: 0 0 16px;
+}
+.rich-text ul {
+  margin: 0 0 16px;
+  padding-left: 24px;
+}
+.rich-text li {
+  margin-bottom: 8px;
+}
+.rich-text a {
+  color: var(--accent);
+}
+
+/* ---------- Buttons ---------- */
+
+.proceed-button,
+.submit-button {
+  appearance: none;
+  border: none;
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--accent-text);
+  font-size: 22px;
+  font-weight: 600;
+  padding: 14px 32px;
+  cursor: pointer;
+  transition: filter 0.12s ease, opacity 0.12s ease;
+}
+.proceed-button:hover:not(:disabled),
+.submit-button:hover:not(:disabled) {
+  filter: brightness(1.1);
+}
+.proceed-button:disabled,
+.submit-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.proceed-button {
+  display: block;
+  margin: 28px auto 0;
+}
+
+.proceed-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 28px;
+}
+.proceed-hint {
+  color: var(--text-dim);
+  font-style: italic;
+}
+.proceed-row .proceed-button {
+  margin: 0;
+}
+
+/* ---------- Checkbox / consent ---------- */
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 20px;
+  margin: 24px 0 8px;
+  cursor: pointer;
+}
+.checkbox-row input {
+  width: 22px;
+  height: 22px;
+  accent-color: var(--accent);
+}
+
+/* ---------- Panels (leaning / generic) ---------- */
+
+.panel {
+  background: var(--panel);
+  border-radius: 14px;
+  padding: 40px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+}
+
+.leaning-panel {
+  text-align: center;
+  max-width: 560px;
+}
+.leaning-panel h2 {
+  font-size: 30px;
+  margin: 0 0 28px;
+}
+
+.demographics-select,
+.demographics-input {
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 20px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #3a4049;
+  background: var(--panel-2);
+  color: var(--text);
+}
+
+.leaning-options {
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #3a4049;
+}
+.leaning-option {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 24px;
+  background: var(--panel-2);
+  border: none;
+  border-bottom: 1px solid #3a4049;
+  cursor: pointer;
+  transition: background 0.12s;
+  text-align: left;
+  width: 100%;
+}
+.leaning-option:last-child {
+  border-bottom: none;
+}
+.leaning-option:hover {
+  background: #30353f;
+}
+.leaning-option-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.leaning-option-label {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+/* ---------- Priors ---------- */
+
+.prior-section {
+  background: var(--panel);
+  border-radius: 14px;
+  padding: 24px 28px;
+  margin-bottom: 28px;
+}
+.prior-prompt {
+  font-size: 20px;
+  margin: 0 0 16px;
+}
+.prior-scale {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-dim);
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+.prior-row {
+  display: grid;
+  grid-template-columns: 160px 1fr 56px;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 0;
+}
+.prior-topic {
+  font-size: 20px;
+  font-weight: 600;
+}
+.prior-value {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-size: 20px;
+}
+
+/* ---------- Sliders ---------- */
+
+input.slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: #444b55;
+  outline: none;
+  cursor: pointer;
+}
+input.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid #fff;
+}
+input.slider::-moz-range-thumb {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid #fff;
+}
+
+/* ---------- Waiting room ---------- */
+
+.waiting-box,
+.post-waiting-box,
+.debrief-box {
+  text-align: center;
+  max-width: 760px;
+}
+.waiting-label {
+  font-size: 36px;
+  margin-bottom: 16px;
+}
+.player-count {
+  font-size: 28px;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}
+.post-waiting-text {
+  font-size: 26px;
+  white-space: pre-line;
+  margin-bottom: 32px;
+}
+.debrief-box p {
+  font-size: 20px;
+}
+
+/* ---------- Demographics ---------- */
+
+.demographics-intro {
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+.age-error {
+  color: #ff6b6b;
+  font-size: 15px;
+  margin-top: 4px;
+  min-height: 20px;
+}
+.demographics-label {
+  display: block;
+  font-size: 20px;
+  font-weight: 600;
+  margin: 24px 0 10px;
+}
+.demographics-text {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 90px;
+  font-size: 18px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #3a4049;
+  background: var(--panel-2);
+  color: var(--text);
+  font-family: inherit;
+  resize: vertical;
+}
+
+/* ---------- Discussion room ---------- */
+
+.discussion-room {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--discussion-bg);
+  padding: 24px;
+}
+.room-panel {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 900px;
+  height: 100%;
+  max-height: 100%;
+  background: var(--panel);
+  border-radius: 16px;
+  padding: 20px 24px;
+  box-sizing: border-box;
+}
+.room-header {
+  flex: 0 0 auto;
+  text-align: center;
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #3a4049;
+}
+.round-counter {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.room-title {
+  font-size: 26px;
+  margin: 0;
+  text-align: center;
+}
+.messages-scroll {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+.messages {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Chat bubbles */
+.message {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  max-width: 80%;
+  align-self: flex-start; /* NPC messages on the left */
+}
+.message.player {
+  align-self: flex-end; /* player messages on the right */
+}
+.message-iconbox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 96px;
+  flex: 0 0 96px;
+}
+.message-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--panel-2);
+}
+.message-panel {
+  background: var(--bubble-bg);
+  border: 6px solid var(--neutral);
+  border-radius: 22px;
+  padding: 12px 18px;
+}
+.message-panel.truthy {
+  border-color: var(--truthy);
+}
+.message-panel.falsey {
+  border-color: var(--falsey);
+}
+.message-panel.neutral {
+  border-color: var(--neutral);
+}
+.message-affiliation {
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+.message-text {
+  font-size: 19px;
+}
+.message-text.typing {
+  color: rgb(109, 112, 110);
+  font-style: italic;
+}
+
+/* Popups (slider / opinion) docked at the bottom of the chat */
+.chat-input-area {
+  flex: 0 0 auto;
+  margin-top: 16px;
+}
+.chat-input-area:empty {
+  margin-top: 0;
+}
+.popup {
+  background: var(--panel-2);
+  border-radius: 14px;
+  padding: 20px 22px;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+}
+.popup-title {
+  font-size: 20px;
+  margin-bottom: 16px;
+}
+.slider-value {
+  text-align: center;
+  font-size: 22px;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 10px;
+}
+.slider-labels {
+  display: flex;
+  margin-top: 6px;
+}
+.slider-end-label {
+  flex: 1 1 0;
+  color: var(--text-dim);
+  font-size: 16px;
+}
+.slider-popup .submit-button {
+  display: block;
+  margin: 18px auto 0;
+}
+
+/* Opinion popup */
+.opinion-buttons {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.opinion-button {
+  flex: 1 1 0;
+  appearance: none;
+  border: 2px solid #3a4049;
+  border-radius: 8px;
+  background: var(--panel);
+  color: var(--text);
+  font-size: 19px;
+  font-weight: 600;
+  padding: 12px;
+  cursor: pointer;
+  transition: border-color 0.12s ease, background 0.12s ease;
+}
+.opinion-button:hover {
+  border-color: var(--accent);
+}
+.opinion-button.selected {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-text);
+}
+.opinion-input {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 80px;
+  font-size: 18px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #3a4049;
+  background: var(--panel);
+  color: var(--text);
+  font-family: inherit;
+  resize: vertical;
+}
+.opinion-input:disabled {
+  opacity: 0.5;
+}
+.opinion-popup .submit-button {
+  display: block;
+  margin: 16px auto 0;
+}
