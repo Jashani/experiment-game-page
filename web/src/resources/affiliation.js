@@ -16,8 +16,9 @@ export class Affiliation {
 const ICONS_BASE = "assets/icons/";
 
 function iconSet(prefix) {
-  // The .tres resources reference icons 0..8 (nine each).
-  return Array.from({ length: 9 }, (_, i) => `${ICONS_BASE}${prefix}_icon_${i}.png`);
+  // Icons 0..8 are the in-game NPC avatars; icon 9 is the plain silhouette used
+  // on the leaning selection screen.
+  return Array.from({ length: 10 }, (_, i) => `${ICONS_BASE}${prefix}_icon_${i}.png`);
 }
 
 // Colours from rep_affiliation.tres / dem_affiliation.tres (Godot Color → rgb).

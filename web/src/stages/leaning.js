@@ -20,7 +20,7 @@ export function runLeaning(mount) {
 
     function makeOption(affiliationKey) {
       const affil = Globals.affiliations[affiliationKey];
-      const icon = el("img.leaning-option-icon", { src: affil.icons[7], alt: affil.text });
+      const icon = el("img.leaning-option-icon", { src: affil.icons[9], alt: affil.text });
       const label = el("span.leaning-option-label", { text: affil.text });
       label.style.color = affil.color;
       const btn = el("button.leaning-option", { type: "button" }, [icon, label]);
