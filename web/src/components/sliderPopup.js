@@ -22,20 +22,22 @@ export class SliderPopup {
     });
     this.labelsContainer = el("div.slider-labels");
     this.submitButton = el("button.submit-button", { type: "button", text: "Submit", disabled: true });
+    this.hint = el("div.proceed-hint", { text: "Please interact with the slider to continue..." });
 
     this.root = el("div.popup.slider-popup", {}, [
       this.title,
       this.valueLabel,
       this.slider,
       this.labelsContainer,
-      this.submitButton,
+      el("div.proceed-row", {}, [this.hint, this.submitButton]),
     ]);
 
     this._completeResolvers = [];
 
     this.slider.addEventListener("input", () => {
       this.setValueLabel(this.value);
-      this.submitButton.disabled = false; // drag_started → enable submit
+      this.submitButton.disabled = false;
+      this.hint.style.visibility = "hidden";
     });
     this.submitButton.addEventListener("click", () => this._onSubmit());
   }
