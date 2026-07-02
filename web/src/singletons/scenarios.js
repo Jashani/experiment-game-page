@@ -30,20 +30,7 @@ class ScenariosSingleton {
     return this.scenarios.length;
   }
 
-  isFirstAttentionCheck() {
-    const target = Math.min(3, this.totalScenarios);
-    const current = this.totalScenarios - this.scenarios.length;
-    return current === target;
-  }
-
-  isSecondAttentionCheck() {
-    if (this.totalScenarios <= 3) return false;
-    const target = Math.min(6, this.totalScenarios);
-    const current = this.totalScenarios - this.scenarios.length;
-    return current === target;
-  }
-
-  _loadRandomScenarios() {
+_loadRandomScenarios() {
     const arrangements = this.scenariosConfig["arrangements"];
     const responsePool = this._buildResponsePool();
     const scenarioPools = this._buildScenarioPools();

@@ -12,6 +12,31 @@
 		"low_label": "No bias",
 		"high_label": "Extremely biased"
 	},
+	"attention_checks": [
+		{
+			"round": 3,
+			"type": "slider",
+			"stage": "after",
+			"column_name": "attention_check",
+			"text_democrat": "This is an attention check. As a Democratic participant, please set the scale to 100% on the LEFT, to Extreme left bias. Do not set the scale to anything other than 100% on the left or the right.",
+			"text_republican": "This is an attention check. As a Republican participant, please set the scale to 100% on the RIGHT, to Extreme right bias. Do not set the scale to anything other than 100% on the left or the right.",
+			"labels": ["Extreme left bias", "No bias", "Extreme right bias"],
+			"min_value": -100.0,
+			"max_value": 100.0,
+			"value": 0.0
+		},
+		{
+			"round": 6,
+			"type": "slider",
+			"stage": "after",
+			"column_name": "attention_check_2",
+			"text": "If you identified as a Democrat, please set the scale to 100% on the RIGHT, to Extreme right bias. If you identified as a Republican, please set the scale to 100% on the LEFT, to Extreme left bias. Do not set the scale to anything other than 100% on the left or the right.",
+			"labels": ["Extreme left bias", "No bias", "Extreme right bias"],
+			"min_value": -100.0,
+			"max_value": 100.0,
+			"value": 0.0
+		}
+	],
 	"prompts": [
 		{
 			"type": "slider",
@@ -43,27 +68,6 @@
 			"min_value": 0.0,
 			"max_value": 100.0,
 			"value": 50.0
-		},
-		{
-			"type": "slider",
-			"stage": "after",
-			"column_name": "attention_check",
-			"text_democrat": "This is an attention check. As a Democratic participant, please set the scale to 100% on the LEFT, to Extreme left bias. Do not set the scale to anything other than 100% on the left or the right.",
-			"text_republican": "This is an attention check. As a Republican participant, please set the scale to 100% on the RIGHT, to Extreme right bias. Do not set the scale to anything other than 100% on the left or the right.",
-			"labels": ["Extreme left bias", "No bias", "Extreme right bias"],
-			"min_value": -100.0,
-			"max_value": 100.0,
-			"value": 0.0
-		},
-		{
-			"type": "slider",
-			"stage": "after",
-			"column_name": "attention_check_2",
-			"text": "If you identified as a Democrat, please set the scale to 100% on the RIGHT, to Extreme right bias. If you identified as a Republican, please set the scale to 100% on the LEFT, to Extreme left bias. Do not set the scale to anything other than 100% on the left or the right.",
-			"labels": ["Extreme left bias", "No bias", "Extreme right bias"],
-			"min_value": -100.0,
-			"max_value": 100.0,
-			"value": 0.0
 		},
 		{
 			"type": "slider",

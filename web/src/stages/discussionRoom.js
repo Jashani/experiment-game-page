@@ -57,7 +57,7 @@ async function runRound(mount, round, roundNum, total) {
     ])
   );
 
-  const { before, after } = getPrompts();
+  const { before, after } = getPrompts(roundNum);
 
   // last_slider_value persists across the round (used by use_previous prompts).
   const state = { lastSliderValue: 0.0 };
@@ -72,20 +72,22 @@ async function runRound(mount, round, roundNum, total) {
   observer.disconnect();
 }
 
-function getPrompts() {
+function getPrompts(roundNum) {
   const before = [];
   const after = [];
   for (const promptDict of Config.config["prompts"]) {
-    const col = promptDict["column_name"];
-    if (col === "attention_check" && !Scenarios.isFirstAttentionCheck()) continue;
-    if (col === "attention_check_2" && !Scenarios.isSecondAttentionCheck()) continue;
     const prompt = Prompt.newFromDict(promptDict);
-    if (prompt.columnName === "attention_check") {
-      const isDem = Globals.playerAffiliation === Globals.affiliations.democrat;
-      prompt.text = isDem ? promptDict["text_democrat"] : promptDict["text_republican"];
-    }
     if (prompt.stage === Stage.BEFORE) before.push(prompt);
     else if (prompt.stage === Stage.AFTER) after.push(prompt);
+  }
+  for (const attnDict of Config.config["attention_checks"] ?? []) {
+    if (attnDict["round"] !== roundNum) continue;
+    const prompt = Prompt.newFromDict(attnDict);
+    if (attnDict["text_democrat"] !== undefined) {
+      const isDem = Globals.playerAffiliation === Globals.affiliations.democrat;
+      prompt.text = isDem ? attnDict["text_democrat"] : attnDict["text_republican"];
+    }
+    after.push(prompt);
   }
   return { before, after };
 }
