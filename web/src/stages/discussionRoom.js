@@ -82,12 +82,7 @@ function getPrompts(roundNum) {
   }
   for (const attnDict of Config.config["attention_checks"] ?? []) {
     if (attnDict["round"] !== roundNum) continue;
-    const prompt = Prompt.newFromDict(attnDict);
-    if (attnDict["text_democrat"] !== undefined) {
-      const isDem = Globals.playerAffiliation === Globals.affiliations.democrat;
-      prompt.text = isDem ? attnDict["text_democrat"] : attnDict["text_republican"];
-    }
-    after.push(prompt);
+    after.push(Prompt.newFromDict(attnDict));
   }
   return { before, after };
 }
