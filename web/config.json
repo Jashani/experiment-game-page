@@ -1,5 +1,17 @@
 {
 	"control": false,
+	"priors_accuracy": {
+		"rep_prompt": "Imagine a typical Republican user on this platform who is presented with a politically neutral headline on the following topics. How likely are they to know whether the headline is true or false?",
+		"dem_prompt": "Imagine a typical Democrat user on this platform who is presented with a politically neutral headline on the following topics. How likely are they to know whether the headline is true or false?",
+		"low_label": "Not at all likely",
+		"high_label": "Extremely likely"
+	},
+	"priors_bias": {
+		"rep_prompt": "What is the level of bias you would expect from a typical Republican on this platform, about each of the following topics?\n\nA stronger bias means they are more likely to endorse claims that align with their party's view or reject claims that misalign with it, regardless of whether those claims are true.",
+		"dem_prompt": "What is the level of bias you would expect from a typical Democrat on this platform, about each of the following topics?\n\nA stronger bias means they are more likely to endorse claims that align with their party's view or reject claims that misalign with it, regardless of whether those claims are true.",
+		"low_label": "No bias",
+		"high_label": "Extremely biased"
+	},
 	"prompts": [
 		{
 			"type": "slider",
@@ -36,7 +48,8 @@
 			"type": "slider",
 			"stage": "after",
 			"column_name": "attention_check",
-			"text": "This is an attention check. [Overridden at runtime per affiliation.]",
+			"text_democrat": "This is an attention check. As a Democratic participant, please set the scale to 100% on the LEFT, to Extreme left bias. Do not set the scale to anything other than 100% on the left or the right.",
+			"text_republican": "This is an attention check. As a Republican participant, please set the scale to 100% on the RIGHT, to Extreme right bias. Do not set the scale to anything other than 100% on the left or the right.",
 			"labels": ["Extreme left bias", "No bias", "Extreme right bias"],
 			"min_value": -100.0,
 			"max_value": 100.0,

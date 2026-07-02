@@ -1,14 +1,14 @@
 import { runPriors } from "./priorsCommon.js";
+import { Config } from "../singletons/config.js";
 
 // Mirror of stages/1_3_priors_accuracy.
 export function runPriorsAccuracy(mount) {
+  const cfg = Config.config["priors_accuracy"];
   return runPriors(mount, {
     keyPrefix: "prior_accuracy",
-    lowLabel: "Not at all likely",
-    highLabel: "Extremely likely",
-    repPrompt:
-      "Imagine a typical Republican user on this platform who is presented with a politically neutral headline on the following topics. How likely are they to know whether the headline is true or false?",
-    demPrompt:
-      "Imagine a typical Democrat user on this platform who is presented with a politically neutral headline on the following topics. How likely are they to know whether the headline is true or false?",
+    lowLabel: cfg["low_label"],
+    highLabel: cfg["high_label"],
+    repPrompt: cfg["rep_prompt"],
+    demPrompt: cfg["dem_prompt"],
   });
 }
