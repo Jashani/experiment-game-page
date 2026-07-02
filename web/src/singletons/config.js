@@ -7,7 +7,7 @@ class ConfigSingleton {
   }
 
   async load(path = "config.json") {
-    const response = await fetch(path);
+    const response = await fetch(path + "?v=" + Date.now());
     if (!response.ok) {
       throw new Error("Failed to load config! " + response.status);
     }
