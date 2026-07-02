@@ -7,8 +7,8 @@ export function runPriorsAccuracy(mount) {
     lowLabel: "Not at all likely",
     highLabel: "Extremely likely",
     repPrompt:
-      "Imagine a typical Republican user on this platform who is presented with a politically neutral headline on the following topics. How likely are they to have the knowledge to correctly identify whether the headline is true or false?",
+      "Imagine a typical Republican user on this platform who is presented with a politically neutral headline on the following topics. How likely are they to know whether the headline is true or false?",
     demPrompt:
-      "Imagine a typical Democrat user on this platform who is presented with a politically neutral headline on the following topics. How likely are they to have the knowledge to correctly identify whether the headline is true or false?",
+      "Imagine a typical Democrat user on this platform who is presented with a politically neutral headline on the following topics. How likely are they to know whether the headline is true or false?",
   });
 }

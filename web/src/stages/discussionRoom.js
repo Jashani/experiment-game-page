@@ -76,15 +76,15 @@ function getPrompts() {
   const before = [];
   const after = [];
   for (const promptDict of Config.config["prompts"]) {
-    if (promptDict["column_name"] === "attention_check" && !Scenarios.isAttentionCheckScenario()) {
-      continue;
-    }
+    const col = promptDict["column_name"];
+    if (col === "attention_check" && !Scenarios.isFirstAttentionCheck()) continue;
+    if (col === "attention_check_2" && !Scenarios.isSecondAttentionCheck()) continue;
     const prompt = Prompt.newFromDict(promptDict);
     if (prompt.columnName === "attention_check") {
       const isDem = Globals.playerAffiliation === Globals.affiliations.democrat;
       prompt.text = isDem
-        ? "This is an attention check. As a Democratic participant, please drag the slider all the way to Extreme Left Bias. Do not place the slider on any number other than -100 or 100."
-        : "This is an attention check. As a Republican participant, please drag the slider all the way to Extreme Right Bias. Do not place the slider on any number other than -100 or 100.";
+        ? "This is an attention check. As a Democratic participant, please set the scale to 100% on the LEFT, to Extreme left bias. Do not set the scale to anything other than 100% on the left or the right."
+        : "This is an attention check. As a Republican participant, please set the scale to 100% on the RIGHT, to Extreme right bias. Do not set the scale to anything other than 100% on the left or the right.";
     }
     if (prompt.stage === Stage.BEFORE) before.push(prompt);
     else if (prompt.stage === Stage.AFTER) after.push(prompt);
