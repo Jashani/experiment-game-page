@@ -89,7 +89,7 @@ timeline.push({
 });
 
 // --- SCREEN 4: End / redirect to Prolific ---
-const prolificLink = "https://app.prolific.com/submissions/complete?cc=CLRS1IDQ";
+const prolificLink = "https://app.prolific.com/submissions/complete?cc=C1QMLO4J";
 function Redirect() {
   window.location.href = prolificLink;
 }
