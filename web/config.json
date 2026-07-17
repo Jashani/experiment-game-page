@@ -20,9 +20,9 @@
 			"column_name": "attention_check",
 			"text": "This is an attention check. Based on all available information, if you identified as a Democrat, set the slider to 100% Extreme RIGHT bias. Otherwise set it to 100% Extreme LEFT bias. Do NOT set the scale to anything other than 100% on the left or the right.",
 			"labels": ["Extreme left bias", "No bias", "Extreme right bias"],
-			"min_value": -100.0,
-			"max_value": 100.0,
-			"value": 0.0
+			"min_value": -100,
+			"max_value": 100,
+			"value": 0
 		},
 		{
 			"round": 6,
@@ -31,9 +31,9 @@
 			"column_name": "attention_check_2",
 			"text": "This is an attention check. Based on all available information, if the first user's comment SUPPORTS the headline, set the slider to 100% Extreme LEFT bias. Otherwise set it to 100% Extreme RIGHT bias. Do NOT set the scale to anything other than 100% on the left or the right.",
 			"labels": ["Extreme left bias", "No bias", "Extreme right bias"],
-			"min_value": -100.0,
-			"max_value": 100.0,
-			"value": 0.0
+			"min_value": -100,
+			"max_value": 100,
+			"value": 0
 		}
 	],
 	"prompts": [
@@ -43,9 +43,9 @@
 			"column_name": "belief_prior",
 			"text": "Based on all available information, how likely do you think this headline is to be true?",
 			"labels": ["Definitely false", "Definitely true"],
-			"min_value": 0.0,
-			"max_value": 100.0,
-			"value": 50.0
+			"min_value": 0,
+			"max_value": 100,
+			"value": 50
 		},
 		{
 			"type": "slider",
@@ -53,9 +53,9 @@
 			"column_name": "belief_posterior",
 			"text": "Based on all available information, how likely do you think this headline is to be true?",
 			"labels": ["Definitely false", "Definitely true"],
-			"min_value": 0.0,
-			"max_value": 100.0,
-			"value": 50.0,
+			"min_value": 0,
+			"max_value": 100,
+			"value": 50,
 			"use_previous": true
 		},
 		{
@@ -64,9 +64,9 @@
 			"column_name": "reliability",
 			"text": "Suppose this user was commenting on whether a politically neutral headline was true or not, how likely are they to be right about the veracity of the headline?",
 			"labels": ["Very unlikely", "Very likely"],
-			"min_value": 0.0,
-			"max_value": 100.0,
-			"value": 50.0
+			"min_value": 0,
+			"max_value": 100,
+			"value": 50
 		},
 		{
 			"type": "slider",
@@ -74,9 +74,9 @@
 			"column_name": "commenter_bias_rating",
 			"text": "Based on all available information, how strongly do you think the first user is biased toward one political side?\n\nA stronger bias means they are more likely to endorse claims that align with their party's view or reject claims that misalign with it, regardless of whether those claims are true.",
 			"labels": ["Extreme left bias", "No bias", "Extreme right bias"],
-			"min_value": -100.0,
-			"max_value": 100.0,
-			"value": 0.0
+			"min_value": -100,
+			"max_value": 100,
+			"value": 0
 		}
 	]
 }
